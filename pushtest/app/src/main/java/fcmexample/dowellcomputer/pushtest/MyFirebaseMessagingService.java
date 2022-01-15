@@ -1,4 +1,4 @@
-package com.example.winpro2022app;
+package fcmexample.dowellcomputer.pushtest;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,13 +10,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat; //이부분이 원래는 import android.support.v4.app.NotificationCompat; 임
-import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat;
 
-import android.util.Log;
-
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

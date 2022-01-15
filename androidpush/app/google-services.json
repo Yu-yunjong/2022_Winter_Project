@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "437816167510",
+    "project_id": "androidpush-142be",
+    "storage_bucket": "androidpush-142be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437816167510:android:1f78491f14d6b003463ff7",
+        "android_client_info": {
+          "package_name": "fcmexample.dowellcomputer.androidpush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437816167510-nvq8hv3gr5eedk5qvjmaqh2si1au9ros.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9oVqp0UORW4u5kgWIZHX5W3mwL-B1HOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437816167510-nvq8hv3gr5eedk5qvjmaqh2si1au9ros.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
