@@ -20,64 +20,41 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFireBaseMessagingService extends FirebaseMessagingService {
+    String token = FirebaseMessaging.getInstance().getToken().getResult();
+
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        if(remoteMessage.getData() == null)
-            return;
-        sendNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("content"));
-    }
-
-    private void sendNotification(String title, String content) {
-        if(title == null)
-            title = "기본 제목";
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        // 오레오(8.0) 이상일 경우 채널을 반드시 생성해야 한다.
-        final String CHANNEL_ID = "채널ID";
-        NotificationManager mManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            final String CHANNEL_NAME = "채널 이름";
-            final String CHANNEL_DESCRIPTION = "채널 Description";
-            final int importance = NotificationManager.IMPORTANCE_HIGH;
-
-            // add in API level 26
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            mChannel.setDescription(CHANNEL_DESCRIPTION);
-            mChannel.enableLights(true);
-            mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
-            mChannel.setSound(defaultSoundUri, null);
-            mChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            mManager.createNotificationChannel(mChannel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-        builder.setAutoCancel(true);
-        builder.setDefaults(Notification.DEFAULT_ALL);
-        builder.setWhen(System.currentTimeMillis());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentText(content);
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            // 아래 설정은 오레오부터 deprecated 되면서 NotificationChannel에서 동일 기능을 하는 메소드를 사용.
-            builder.setContentTitle(title);
-            builder.setSound(defaultSoundUri);
-            builder.setVibrate(new long[]{500, 500});
-        }
-
-        mManager.notify(0, builder.build());
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+        //token을 서버로 전송
     }
 
     @Override
-    public void onNewToken(String s) {
-        super.onNewToken(s);
-        /*
-         * 기존의 FirebaseInstanceIdService에서 수행하던 토큰 생성, 갱신 등의 역할은 이제부터
-         * FirebaseMessaging에 새롭게 추가된 위 메소드를 사용하면 된다.
-         */
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+        //수신한 메시지를 처리
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+        NotificationCompat.Builder builder = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+            }
+            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+        }else {
+            builder = new NotificationCompat.Builder(getApplicationContext());
+        }
+
+        String title = remoteMessage.getNotification().getTitle();
+        String body = remoteMessage.getNotification().getBody();
+
+        builder.setContentTitle(title)
+                .setContentText(body)
+                .setSmallIcon(R.drawable.ic_launcher_background);
+
+        Notification notification = builder.build();
+        notificationManager.notify(1, notification);
+    }
     }
 }
