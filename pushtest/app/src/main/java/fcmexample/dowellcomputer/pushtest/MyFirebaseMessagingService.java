@@ -1,5 +1,7 @@
 package fcmexample.dowellcomputer.pushtest;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,9 +11,8 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-
+import android.util.Log;
 import androidx.core.app.NotificationCompat;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -74,5 +75,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          * 기존의 FirebaseInstanceIdService에서 수행하던 토큰 생성, 갱신 등의 역할은 이제부터
          * FirebaseMessaging에 새롭게 추가된 위 메소드를 사용하면 된다.
          */
+        Log.d(TAG, "Refreshed token: " + s);
+
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // FCM registration token to your app server.
+        sendRegistrationToServer(s);
+    }
+    private void sendRegistrationToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
     }
 }
