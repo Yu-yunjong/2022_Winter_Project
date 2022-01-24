@@ -83,3 +83,7 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# 추가한 파일
+secretAccount.py
+yj_python/secretAccount.py
