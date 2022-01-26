@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "315810650178",
+    "project_id": "winpro2022app",
+    "storage_bucket": "winpro2022app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315810650178:android:1a36af905caf20e5c8f5db",
+        "android_client_info": {
+          "package_name": "com.example.winpro2022app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315810650178-76uc3ioikndg720f3enk7qm9jcggjfrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2tZ89fg0Ljmbx6me6AyBBSlAyS9Xh47E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315810650178-76uc3ioikndg720f3enk7qm9jcggjfrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
