@@ -20,6 +20,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         Log.d("FCM Log", "Refreshed token: " + token);
     }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {                      //포어그라운드

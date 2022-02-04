@@ -13,12 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07e249db-fd1b-431e-9121-5d4beaf1cbd5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/app/src/main/java/com/example/winpro2022app/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/app/src/main/java/com/example/winpro2022app/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/app/src/main/java/com/example/winpro2022app/MyFirebaseMessagingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/app/src/main/java/com/example/winpro2022app/MyFirebaseMessagingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../winpro2022app/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../winpro2022app/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +80,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
