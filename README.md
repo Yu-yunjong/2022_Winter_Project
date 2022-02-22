@@ -8,3 +8,6 @@
 
 ## 안드로이드 앱
 - https://github.com/Yu-yunjong/2022_Winter_Project/tree/main/lastpush
+
+## 시연 동영상
+- https://github.com/Yu-yunjong/2022_Winter_Project/blob/main/%EC%8B%9C%EC%97%B0%20%EB%8F%99%EC%98%81%EC%83%81.mp4
