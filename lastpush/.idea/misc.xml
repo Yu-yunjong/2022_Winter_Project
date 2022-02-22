@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/activity_keyword.xml" value="0.25" />
         <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/activity_main.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/activity_menu.xml" value="0.3536458333333333" />
-        <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/activity_signup.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/activity_signup.xml" value="0.33" />
+        <entry key="..\:/Users/ysj97/Documents/2022_Winter_Project/lastpush/app/src/main/res/layout/array.xml" value="0.30572916666666666" />
       </map>
     </option>
   </component>

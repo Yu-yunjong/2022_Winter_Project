@@ -1,10 +1,9 @@
-package com.example.myApp;
-
-import static android.content.ContentValues.TAG;
+package com.example.myApp.Activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -17,6 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myApp.Login.LoginRequest;
+import com.example.myApp.Login.LoginResponse;
+import com.example.myApp.Service.PreferenceManager;
+import com.example.myApp.R;
+import com.example.myApp.Service.RetrofitClient;
+import com.example.myApp.Service.initMyApi;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,10 +33,16 @@ public class MainActivity extends AppCompatActivity {
     EditText idinput;
     EditText pwinput;
 
+    String appnum = FirebaseInstanceId.getInstance().getToken();
+
+    private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
 
         idinput = (EditText) findViewById(R.id.editTextID);
         pwinput = (EditText) findViewById(R.id.editTextPassword);
@@ -37,9 +50,26 @@ public class MainActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.Loginbt);
         Button signup = (Button) findViewById(R.id.SignupBt);
 
+        Log.d("appnum: ",appnum);
+
+        String autoID = PreferenceManager.getString(mContext,"id");
+        String autoPassword = PreferenceManager.getString(mContext,"pwd");
+
+
+        if(!autoID.equals("")){
+            idinput.setText(autoID);
+            pwinput.setText(autoPassword);
+            LoginResponse();
+        } else{
+            Log.d("mContext autoID: ",autoID);
+            Log.d("mContext autoPassword: ",autoPassword);
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String id = idinput.getText().toString();
                 String pw = pwinput.getText().toString();
                 hideKeyboard();
@@ -58,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     //로그인 통신
+                    PreferenceManager.setString(mContext,"id",id);
+                    PreferenceManager.setString(mContext,"pwd",pw);
                     LoginResponse();
                 }
 
@@ -80,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         String userPassword = pwinput.getText().toString().trim();
 
         //loginRequest에 사용자가 입력한 id와 pw를 저장
-        LoginRequest loginRequest = new LoginRequest(userID, userPassword);
+        LoginRequest loginRequest = new LoginRequest(userID, userPassword,appnum);
 
         //retrofit 생성
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
@@ -93,64 +125,42 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("retrofit", "Data fetch success");
 
-                //통신 성공
-                if (response.isSuccessful() && response.body() != null) {
-
-                    //response.body()를 result에 저장
-                    LoginResponse result = response.body();
-
-                    //받은 코드 저장
-                    String resultCode = result.getResultCode();
-
-                    //받은 토큰 저장
-                    String token = result.getToken();
-
-                    String success = "200"; //로그인 성공
-                    String errorId = "300"; //아이디 일치x
-                    String errorPw = "400"; //비밀번호 일치x
+                String resultCode = String.valueOf(response.code());
+                Log.d("result http: ",resultCode);
 
 
-                    if (resultCode.equals(success)) {
-                        String userID = idinput.getText().toString();
-                        String userPassword = pwinput.getText().toString();
+                String success = "200"; //로그인 성공
+                String fail = "300"; //로그인 실패
 
-                        //다른 통신을 하기 위해 token 저장
-                        setPreference(token,token);
 
-                        Toast.makeText(MainActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                        intent.putExtra("userId", userID);
-                        startActivity(intent);
-                        MainActivity.this.finish();
+                if (resultCode.equals(success)) {
+                    String userID = idinput.getText().toString();
+                    String userPassword = pwinput.getText().toString();
 
-                    } else if (resultCode.equals(errorId)) {
+                    Toast.makeText(MainActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    intent.putExtra("userId", userID);
+                    startActivity(intent);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("알림")
-                                .setMessage("아이디가 존재하지 않습니다.")
-                                .setPositiveButton("확인", null)
-                                .create()
-                                .show();
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                } else if (resultCode.equals(fail)) {
 
-                    } else if (resultCode.equals(errorPw)) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("알림")
-                                .setMessage("비밀번호가 일치하지 않습니다.")
-                                .setPositiveButton("확인", null)
-                                .create()
-                                .show();
-                    } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("알림")
+                            .setMessage("아이디 또는 비밀번호를 확인해주세요.")
+                            .setPositiveButton("확인", null)
+                            .create()
+                            .show();
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("알림")
-                                .setMessage("예기치 못한 오류가 발생하였습니다.")
-                                .setPositiveButton("확인", null)
-                                .create()
-                                .show();
+                } else {
 
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("알림")
+                            .setMessage("예기치 못한 오류가 발생하였습니다.")
+                            .setPositiveButton("확인", null)
+                            .create()
+                            .show();
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.example.myApp;
+package com.example.myApp.Service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,13 +12,17 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.myApp.Activity.MainActivity;
+import com.example.myApp.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
+
         Log.d("FCM Log", "Refreshed token: " + token);
+        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", token).apply();
     }
 
     @Override
@@ -30,6 +34,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             /* 백그라운드 작동 내용 */
         }
     }
+
+    public static String getToken(Context context) {
+        return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty");
+    }
+
 
     private void sendNotification(String messageBody, String messageTitle)  {
         Log.d("FCM Log", "알림 메시지: " + messageBody);

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="server">
+        <item>루페온</item>
+        <item>실리안</item>
+        <item>아만</item>
+        <item>카마인</item>
+        <item>카제로스</item>
+        <item>아브렐슈드</item>
+        <item>카단</item>
+        <item>니나브</item>
+    </string-array>
+
+    <string-array name="keyword">
+        <item>웨이</item>
+        <item>세리아</item>
+        <item>바루투</item>
+        <item>레온하트네리아</item>
+        <item>시이라</item>
+        <item>천둥</item>
+        <item>자이언트웜</item>
+        <item>모리나</item>
+        <item>하셀링크</item>
+        <item>카도건</item>
+        <item>베르하트</item>
+        <item>천둥날개</item>
+        <item>미한</item>
+        <item>모르페오</item>
+        <item>녹스</item>
+        <item>진매드닉</item>
+        <item>시안</item>
+        <item>자베른</item>
+        <item>라하르트</item>
+        <item>기드온</item>
+        <item>페일린</item>
+        <item>엘레노아</item>
+        <item>알리페르</item>
+        <item>케이사르</item>
+        <item>위대한성네리아</item>
+        <item>피에르</item>
+        <item>칼도르</item>
+        <item>굴딩</item>
+        <item>비올레</item>
+        <item>모카모카</item>
+        <item>수호자에오로</item>
+        <item>창조의알</item>
+        <item>알비온</item>
+        <item>세토</item>
+        <item>키케라</item>
+        <item>스텔라</item>
+        <item>월향도사</item>
+        <item>객주도사</item>
+        <item>수령도사</item>
+        <item>제레온</item>
+        <item>베른젠로드</item>
+        <item>루기네</item>
+        <item>킬리언</item>
+        <item>사트라</item>
+        <item>카인</item>
+        <item>슈테른네리아</item>
+        <item>아이히만박사</item>
+    </string-array>
+</resources>

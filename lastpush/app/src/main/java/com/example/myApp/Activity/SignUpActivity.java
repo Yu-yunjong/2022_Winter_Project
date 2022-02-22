@@ -1,7 +1,6 @@
-package com.example.myApp;
+package com.example.myApp.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.myApp.R;
+import com.example.myApp.Service.RetrofitClient;
+import com.example.myApp.Signup.SignupRequest;
+import com.example.myApp.Signup.SignupResponse;
+import com.example.myApp.Service.initMyApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +30,7 @@ public class SignUpActivity extends Activity {
     EditText su_pwinput;
     EditText su_checkinput;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +40,9 @@ public class SignUpActivity extends Activity {
         su_pwinput = (EditText) findViewById(R.id.editTextPasswordSignUp);
         su_checkinput = (EditText) findViewById(R.id.editTextPasswordSignUpCheck);
 
-        Button signupcomplete = (Button)findViewById(R.id.SignupComplete);
-        Button signupcancel = (Button)findViewById(R.id.SignupCancel);
+        Button signupcomplete = (Button) findViewById(R.id.SignupComplete);
+        Button signupcancel = (Button) findViewById(R.id.SignupCancel);
+
 
         signupcomplete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,26 +94,19 @@ public class SignUpActivity extends Activity {
         su_idinput.setError(null);
         su_pwinput.setError(null);
 
+        Spinner server_sel = (Spinner) findViewById(R.id.server);
+
         String id = su_idinput.getText().toString().trim();
         String pwd = su_pwinput.getText().toString().trim();
+        String server = server_sel.getSelectedItem().toString();
 
-        SignupRequest signupRequest = new SignupRequest(id,pwd);
+        SignupRequest signupRequest = new SignupRequest(id,pwd,server);
 
         boolean cancel = false;
         View focusView = null;
 
-        // 패스워드의 유효성 검사
-        if (pwd.isEmpty()) {
-            su_pwinput.setError("비밀번호를 입력해주세요.");
-            focusView = su_pwinput;
-            cancel = true;
-        }
-        // 이메일의 유효성 검사
-        if (id.isEmpty()) {
-            su_idinput.setError("이메일을 입력해주세요.");
-            focusView = su_idinput;
-            cancel = true;
-        } else if (!isEmailValid(id)) {
+
+        if (!isEmailValid(id)) {
             su_idinput.setError("@를 포함한 유효한 이메일을 입력해주세요.");
             focusView = su_idinput;
             cancel = true;
@@ -114,7 +115,7 @@ public class SignUpActivity extends Activity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            startSignup(new SignupRequest( id , pwd));
+            startSignup(new SignupRequest( id , pwd, server));
         }
     }
 
@@ -124,14 +125,23 @@ public class SignUpActivity extends Activity {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         initMyApi initMyApi = RetrofitClient.getRetrofitInterface();
 
+
         initMyApi.userSignup(data).enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                SignupResponse result = response.body();
-                Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
 
-                if (result.getCode() == 200) {
+                String resultcode = String.valueOf(response.code());
+                Log.d("result http: ",resultcode);
+
+                if (resultcode.equals("200")) {
+                    Log.d("success 200 http: ",resultcode);
+                    Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                     finish();
+                }
+                else if (resultcode.equals("300")) {
+                    Log.d("error 300 http: ",resultcode);
+
+                    Toast.makeText(SignUpActivity.this, "이미 존재하는 아이디 입니다.", Toast.LENGTH_SHORT).show();
                 }
             }
 
